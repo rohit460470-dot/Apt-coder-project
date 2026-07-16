@@ -1,0 +1,6 @@
+{
+  "name": "Food Delivery Web Application",
+  "description": "A highly polished, responsive, and modern food delivery web application built with HTML5, CSS3, and modular Vanilla JavaScript.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

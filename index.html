@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BiteSpeed | Delicious Food Delivered Instantly</title>
+    <!-- Google Fonts Poppins & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Modular Stylesheets served by Vite -->
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <link rel="stylesheet" href="/css/darkmode.css" />
+  </head>
+  <body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 antialiased font-sans">
+    
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="fixed top-24 right-6 flex flex-col gap-3 max-w-sm w-full pointer-events-none"></div>
+
+    <!-- Sticky Navigation Bar -->
+    <header class="sticky top-0 z-40 w-full glass-panel border-b border-slate-100 dark:border-slate-800 shadow-xs transition-colors duration-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <!-- Logo -->
+        <a href="#/" class="flex items-center gap-2 group focus:outline-none">
+          <div class="w-10 h-10 rounded-2xl bg-orange-500 hover:bg-orange-600 flex items-center justify-center shadow-md shadow-orange-500/20 group-hover:rotate-6 transition-all duration-300">
+            <i data-lucide="utensils-crosses" class="w-5.5 h-5.5 text-white"></i>
+          </div>
+          <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-orange-500 to-red-600 bg-clip-text text-transparent">BiteSpeed</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-8">
+          <a href="#/" class="nav-link text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-orange-500 dark:hover:text-orange-400 transition-colors py-2 border-b-2 border-transparent hover:border-orange-500">Home</a>
+          <a href="#/restaurants" class="nav-link text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-orange-500 dark:hover:text-orange-400 transition-colors py-2 border-b-2 border-transparent hover:border-orange-500">Restaurants</a>
+          <a href="#/#offers" class="nav-link text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-orange-500 dark:hover:text-orange-400 transition-colors py-2 border-b-2 border-transparent hover:border-orange-500">Offers</a>
+          <a href="#/#about" class="nav-link text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-orange-500 dark:hover:text-orange-400 transition-colors py-2 border-b-2 border-transparent hover:border-orange-500">About</a>
+          <a href="#/#faq" class="nav-link text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-orange-500 dark:hover:text-orange-400 transition-colors py-2 border-b-2 border-transparent hover:border-orange-500">FAQs</a>
+        </nav>
+
+        <!-- Utility Icons Group -->
+        <div class="flex items-center gap-2 sm:gap-4">
+          <!-- Dark Mode Toggle -->
+          <button id="theme-toggle" class="p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors focus:outline-none" title="Toggle Dark/Light Mode">
+            <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
+            <i data-lucide="sun" class="w-5 h-5 block dark:hidden"></i>
+          </button>
+
+          <!-- Search Quick Trigger -->
+          <a href="#/restaurants" class="p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors focus:outline-none" title="Search Dishes and Restaurants">
+            <i data-lucide="search" class="w-5 h-5"></i>
+          </a>
+
+          <!-- Wishlist Trigger -->
+          <button id="wishlist-trigger" class="p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors relative focus:outline-none" title="My Wishlist">
+            <i data-lucide="heart" class="w-5 h-5"></i>
+            <span id="wishlist-count-badge" class="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-900 hidden">0</span>
+          </button>
+
+          <!-- Shopping Cart Icon -->
+          <button id="cart-trigger" class="p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors relative focus:outline-none" title="View Shopping Cart">
+            <i data-lucide="shopping-bag" class="w-5.5 h-5.5"></i>
+            <span id="cart-count-badge" class="absolute top-1 right-1 bg-orange-500 text-white text-[10px] font-extrabold w-4.5 h-4.5 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-900">0</span>
+          </button>
+
+          <!-- User Profile Icon / Mock Login State -->
+          <button id="user-profile-trigger" class="p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors flex items-center gap-1 focus:outline-none" title="User Profile">
+            <div class="w-6.5 h-6.5 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden flex items-center justify-center">
+              <i data-lucide="user" class="w-4 h-4 text-slate-600 dark:text-slate-300"></i>
+            </div>
+            <span class="text-xs font-semibold hidden lg:block text-slate-700 dark:text-slate-300" id="navbar-username">Hi, Guest</span>
+          </button>
+
+          <!-- Mobile Hamburger Menu Button -->
+          <button id="mobile-menu-trigger" class="md:hidden p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors focus:outline-none">
+            <i data-lucide="menu" class="w-5.5 h-5.5 block" id="menu-icon"></i>
+            <i data-lucide="x" class="w-5.5 h-5.5 hidden" id="close-icon"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation Drawer -->
+      <div id="mobile-drawer" class="md:hidden border-t border-slate-100 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md overflow-hidden max-h-0 transition-all duration-300">
+        <div class="px-4 pt-2 pb-6 space-y-2 flex flex-col">
+          <a href="#/" class="nav-link-mobile px-4 py-3 rounded-2xl hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 text-sm font-semibold text-slate-600 dark:text-slate-300">Home</a>
+          <a href="#/restaurants" class="nav-link-mobile px-4 py-3 rounded-2xl hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 text-sm font-semibold text-slate-600 dark:text-slate-300">Restaurants</a>
+          <a href="#/#offers" class="nav-link-mobile px-4 py-3 rounded-2xl hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 text-sm font-semibold text-slate-600 dark:text-slate-300">Offers</a>
+          <a href="#/#about" class="nav-link-mobile px-4 py-3 rounded-2xl hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 text-sm font-semibold text-slate-600 dark:text-slate-300">About</a>
+          <a href="#/#faq" class="nav-link-mobile px-4 py-3 rounded-2xl hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 text-sm font-semibold text-slate-600 dark:text-slate-300">FAQs</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Side-out Shopping Cart Drawer panel -->
+    <div id="cart-overlay" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs opacity-0 pointer-events-none transition-opacity duration-300"></div>
+    <div id="cart-drawer" class="fixed top-0 right-0 bottom-0 z-50 w-full sm:max-w-md bg-white dark:bg-slate-800 shadow-2xl closed flex flex-col h-full border-l border-slate-100 dark:border-slate-700/50">
+      <!-- Drawer Header -->
+      <div class="p-6 border-b border-slate-100 dark:border-slate-700/50 flex justify-between items-center bg-slate-50 dark:bg-slate-900/40">
+        <div class="flex items-center gap-2">
+          <i data-lucide="shopping-cart" class="w-5.5 h-5.5 text-orange-500"></i>
+          <h2 class="text-lg font-bold text-slate-900 dark:text-slate-100">My Basket</h2>
+          <span id="cart-drawer-count" class="bg-orange-100 dark:bg-orange-950/60 text-orange-600 dark:text-orange-400 text-xs font-extrabold px-2 py-0.5 rounded-md">0</span>
+        </div>
+        <button id="cart-close-trigger" class="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors focus:outline-none">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Drawer Content: List of Items (Scrollable) -->
+      <div id="cart-items-list" class="flex-1 overflow-y-auto p-6 space-y-4 no-scrollbar">
+        <!-- Empty Cart State -->
+        <div id="empty-cart-view" class="h-full flex flex-col items-center justify-center text-center p-4">
+          <div class="w-24 h-24 rounded-full bg-orange-50 dark:bg-orange-950/20 flex items-center justify-center mb-4">
+            <i data-lucide="shopping-bag" class="w-10 h-10 text-orange-400"></i>
+          </div>
+          <h3 class="text-base font-bold text-slate-900 dark:text-slate-100 mb-1">Your cart is empty</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 max-w-xs mb-6">Looks like you haven't added anything to your cart yet. Browse our top restaurants to place an order!</p>
+          <a href="#/restaurants" id="cart-start-ordering" class="bg-orange-500 hover:bg-orange-600 text-white font-semibold text-sm px-6 py-3 rounded-2xl shadow-md transition-all duration-200">Start Exploring</a>
+        </div>
+
+        <!-- Rendered items container -->
+        <div id="cart-items-container" class="space-y-4 hidden"></div>
+      </div>
+
+      <!-- Drawer Footer: Price breakdown & Place Order Trigger -->
+      <div id="cart-drawer-footer" class="p-6 border-t border-slate-100 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-900/40 hidden">
+        <div class="flex items-center justify-between text-xs mb-3 text-slate-500 dark:text-slate-400">
+          <span>Cart Subtotal</span>
+          <span class="font-bold text-slate-900 dark:text-slate-100" id="cart-summary-subtotal">₹0</span>
+        </div>
+        <div class="flex items-center justify-between text-xs mb-3 text-slate-500 dark:text-slate-400">
+          <div class="flex items-center gap-1">
+            <span>Delivery Charges</span>
+            <i data-lucide="info" class="w-3.5 h-3.5 text-slate-400 cursor-pointer" title="Free delivery for orders above ₹199!"></i>
+          </div>
+          <span class="font-bold text-slate-900 dark:text-slate-100" id="cart-summary-delivery">₹0</span>
+        </div>
+        <div class="flex items-center justify-between text-xs mb-4 text-slate-500 dark:text-slate-400">
+          <span>GST & Restaurant Taxes (5%)</span>
+          <span class="font-bold text-slate-900 dark:text-slate-100" id="cart-summary-gst">₹0</span>
+        </div>
+        
+        <div class="border-t border-dashed border-slate-200 dark:border-slate-700 my-4"></div>
+        
+        <div class="flex items-center justify-between text-sm mb-6">
+          <span class="font-extrabold text-slate-900 dark:text-slate-100">Grand Total</span>
+          <span class="text-lg font-extrabold text-orange-600 dark:text-orange-500" id="cart-summary-grandtotal">₹0</span>
+        </div>
+
+        <!-- Checkout Button -->
+        <div class="flex gap-3">
+          <button id="cart-clear-btn" class="px-4 py-3.5 rounded-2xl border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-red-500 hover:border-red-500 dark:hover:text-red-400 dark:hover:border-red-900/50 transition-all font-semibold text-sm focus:outline-none" title="Empty Basket">
+            <i data-lucide="trash-2" class="w-5 h-5"></i>
+          </button>
+          
+          <a href="#/checkout" id="cart-checkout-btn" class="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm px-6 py-3.5 rounded-2xl shadow-lg shadow-orange-500/20 text-center flex items-center justify-center gap-2 transition-all">
+            <span>Proceed to Checkout</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Dynamic Mounting Point -->
+    <main id="app-view" class="min-h-[calc(100vh-64px)] overflow-x-hidden"></main>
+
+
+    <!-- Floating Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 z-30 p-3.5 bg-orange-500 hover:bg-orange-600 text-white rounded-full shadow-lg shadow-orange-500/20 transition-all cursor-pointer focus:outline-none" title="Scroll to Top">
+      <i data-lucide="arrow-up" class="w-5.5 h-5.5"></i>
+    </button>
+
+    <!-- Global Application Footer -->
+    <footer class="bg-slate-900 text-slate-300 border-t border-slate-800 py-16 transition-colors duration-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+          <!-- Column 1: Brand -->
+          <div class="space-y-4">
+            <a href="#/" class="flex items-center gap-2">
+              <div class="w-9 h-9 rounded-xl bg-orange-500 flex items-center justify-center shadow-md shadow-orange-500/20">
+                <i data-lucide="utensils-crosses" class="w-5 h-5 text-white"></i>
+              </div>
+              <span class="text-lg font-extrabold tracking-tight text-white">BiteSpeed</span>
+            </a>
+            <p class="text-xs text-slate-400 leading-relaxed font-normal">Bringing you gourmet recipes and street delicacies from the best restaurants directly to your doorstep. Warm, fresh, and exceptionally fast.</p>
+            <div class="flex items-center gap-3 pt-2">
+              <a href="#" class="p-2 rounded-lg bg-slate-800 hover:bg-orange-500 text-slate-400 hover:text-white transition-all"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+              <a href="#" class="p-2 rounded-lg bg-slate-800 hover:bg-orange-500 text-slate-400 hover:text-white transition-all"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+              <a href="#" class="p-2 rounded-lg bg-slate-800 hover:bg-orange-500 text-slate-400 hover:text-white transition-all"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+              <a href="#" class="p-2 rounded-lg bg-slate-800 hover:bg-orange-500 text-slate-400 hover:text-white transition-all"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+            </div>
+          </div>
+
+          <!-- Column 2: Quick Links -->
+          <div>
+            <h3 class="text-sm font-bold text-white mb-4 uppercase tracking-wider">Quick Navigation</h3>
+            <ul class="space-y-2 text-xs">
+              <li><a href="#/" class="hover:text-orange-500 transition-colors">Home Landing</a></li>
+              <li><a href="#/restaurants" class="hover:text-orange-500 transition-colors">Top Restaurants</a></li>
+              <li><a href="#/#offers" class="hover:text-orange-500 transition-colors">Promotional Offers</a></li>
+              <li><a href="#/#about" class="hover:text-orange-500 transition-colors">About Corporate</a></li>
+              <li><a href="#/#faq" class="hover:text-orange-500 transition-colors">Help Center / FAQs</a></li>
+            </ul>
+          </div>
+
+          <!-- Column 3: Contact Details -->
+          <div>
+            <h3 class="text-sm font-bold text-white mb-4 uppercase tracking-wider">Contact Corporate</h3>
+            <ul class="space-y-3.5 text-xs">
+              <li class="flex items-start gap-2.5">
+                <i data-lucide="map-pin" class="w-4 h-4 text-orange-500 shrink-0"></i>
+                <span class="text-slate-400 font-normal">Tech Hub Tower, Lane 2, Salt Lake, Kolkata, India</span>
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="phone" class="w-4 h-4 text-orange-500"></i>
+                <span class="text-slate-400 font-normal">+91 1800-456-7890</span>
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="mail" class="w-4 h-4 text-orange-500"></i>
+                <span class="text-slate-400 font-normal">support@bitespeed.com</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Column 4: Newsletter -->
+          <div>
+            <h3 class="text-sm font-bold text-white mb-4 uppercase tracking-wider">Subscribe & Save</h3>
+            <p class="text-xs text-slate-400 mb-4 leading-relaxed font-normal">Subscribe to our newsletter to receive the latest promotional coupon codes, cooking trends, and restaurant listings.</p>
+            <form id="newsletter-form" class="flex flex-col sm:flex-row gap-2">
+              <input type="email" placeholder="Your email address" required class="flex-1 bg-slate-800 text-white border border-slate-700 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-orange-500" />
+              <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center justify-center gap-1 shadow-md hover:shadow-lg transition-all focus:outline-none cursor-pointer">
+                <span>Join</span>
+                <i data-lucide="send" class="w-3.5 h-3.5"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="border-t border-slate-800 my-8"></div>
+
+        <!-- Footer Bottom -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+          <p>© 2026 BiteSpeed Food Delivery Technologies Pvt Ltd. All Rights Reserved.</p>
+          <div class="flex gap-6">
+            <a href="#" class="hover:text-slate-400">Privacy Policy</a>
+            <a href="#" class="hover:text-slate-400">Terms of Use</a>
+            <a href="#" class="hover:text-slate-400">Sitemap</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Main JavaScript Modules -->
+    <script type="module" src="/js/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* ============================================================================
+   RESPONSIVE LAYOUT STYLES & MOBILE OPTIMIZATIONS
+   ============================================================================ */
+
+/* Mobile Touch Target Expansion (A11y compliance: minimum 44px) */
+@media (max-width: 640px) {
+  .quantity-dec-btn,
+  .quantity-inc-btn,
+  .add-to-cart-btn,
+  .wishlist-btn,
+  #back-to-top,
+  .nav-link-mobile {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Prevent background scrolling when slide-out drawer is active */
+  body.drawer-open {
+    overflow: hidden;
+  }
+  
+  /* Touch friendly card scaling */
+  .restaurant-card:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Custom Scroll Margins for Anchor navigation on landing page sections */
+section {
+  scroll-margin-top: 64px; /* Aligns precisely when header is sticky */
+}
+
+/* Fluid responsive adjustments for massive display screen bento-grids */
+@media (min-width: 1536px) {
+  .max-w-7xl {
+    max-width: 90rem; /* expand bento layout on extremely wide screens */
+  }
+}

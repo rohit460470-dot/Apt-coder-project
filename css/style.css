@@ -1,0 +1,293 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-slate-50: #F4F7F6;
+  --color-slate-100: #EAEFEB;
+  --color-slate-800: #1A1A1A;
+  --color-slate-900: #111111;
+  
+  --color-orange-50: #FFF5F2;
+  --color-orange-100: #FFEBE5;
+  --color-orange-400: #FF8C61;
+  --color-orange-500: #FF6B35;
+  --color-orange-600: #E85A24;
+}
+
+/* ============================================================================
+   CUSTOM STYLES & LUXURY REFINEMENTS
+   ============================================================================ */
+
+:root {
+  --primary-orange: #FF6B35;
+  --primary-orange-hover: #E85A24;
+  --primary-font-display: "Space Grotesk", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-slate-50);
+  color: var(--color-slate-800);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Typography refinements matching Professional Polish */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--primary-font-display), var(--font-sans);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Dark Mode Overrides */
+.dark body {
+  background-color: #0B0F19; /* slate-950/deep space */
+  color: #F1F5F9; /* slate-100 */
+}
+
+/* Custom Slide-out Cart Drawer */
+#cart-drawer {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#cart-drawer.open {
+  transform: translateX(0);
+}
+
+#cart-drawer.closed {
+  transform: translateX(100%);
+}
+
+/* Slide-out Overlay */
+#cart-overlay, #modal-overlay {
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Toast Notifications Container */
+#toast-container {
+  z-index: 1000;
+}
+
+.toast-message {
+  animation: slideInLeft 0.35s cubic-bezier(0.16, 1, 0.3, 1), fadeOut 0.3s ease-in-out 2.7s forwards;
+}
+
+/* Animations */
+@keyframes slideInLeft {
+  from {
+    transform: translateX(100%) translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
+
+.dark .glass-panel {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
+
+/* Skeleton Loader pulse */
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .4;
+  }
+}
+
+.skeleton-animate {
+  animation: skeleton-pulse 1.8s ease-in-out infinite;
+}
+
+/* Floating back to top button */
+#back-to-top {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+}
+
+#back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+#back-to-top:hover {
+  transform: translateY(-4px);
+}
+
+/* Offers Slider Custom Scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Custom radio styles for checkout */
+.custom-radio:checked + label {
+  border-color: var(--primary-orange);
+  background-color: rgba(255, 107, 53, 0.05);
+}
+
+.dark .custom-radio:checked + label {
+  border-color: var(--primary-orange);
+  background-color: rgba(255, 107, 53, 0.1);
+}
+
+/* Success Checkmark Animation */
+.success-checkmark {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+}
+
+.success-checkmark .check-icon {
+  width: 80px;
+  height: 80px;
+  position: relative;
+  border-radius: 50%;
+  box-sizing: content-box;
+  border: 4px solid #4CAF50;
+}
+
+.success-checkmark .check-icon::before, .success-checkmark .check-icon::after {
+  content: '';
+  height: 100px;
+  position: absolute;
+  background: white;
+  transform: rotate(-45deg);
+}
+
+.dark .success-checkmark .check-icon::before, .dark .success-checkmark .check-icon::after {
+  background: #1E293B; /* slate-800 modal-bg */
+}
+
+.success-checkmark .check-icon::before {
+  width: 30px;
+  top: 37px;
+  left: -9px;
+  transform-origin: 100% 50%;
+  border-radius: 100px 0 0 100px;
+}
+
+.success-checkmark .check-icon::after {
+  width: 60px;
+  top: 46px;
+  left: 20px;
+  transform-origin: 0 100%;
+  border-radius: 0 100px 100px 0;
+}
+
+.success-checkmark .check-icon .icon-line {
+  height: 5px;
+  background-color: #4CAF50;
+  display: block;
+  border-radius: 2px;
+  position: absolute;
+  z-index: 10;
+}
+
+.success-checkmark .check-icon .icon-line.line-tip {
+  width: 47px;
+  left: 14px;
+  top: 45px;
+  transform: rotate(-45deg);
+  animation: icon-line-tip 0.75s;
+}
+
+.success-checkmark .check-icon .icon-line.line-long {
+  width: 25px;
+  left: -2px;
+  top: 38px;
+  transform: rotate(45deg);
+  animation: icon-line-long 0.75s;
+}
+
+.success-checkmark .check-icon .icon-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 4px solid rgba(76, 175, 80, 0.2);
+  box-sizing: content-box;
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  z-index: 2;
+}
+
+@keyframes icon-line-long {
+  0% {
+    width: 0;
+    top: 54px;
+    left: 20px;
+  }
+  100% {
+    width: 25px;
+    top: 38px;
+    left: -2px;
+  }
+}
+
+@keyframes icon-line-tip {
+  0% {
+    width: 0;
+    left: 20px;
+    top: 45px;
+  }
+  100% {
+    width: 47px;
+    left: 14px;
+    top: 45px;
+  }
+}
+
+/* Category card active styling */
+.category-card.active {
+  background-color: var(--primary-orange);
+  color: white;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px -5px rgba(255, 107, 53, 0.4);
+}
+
+.category-card.active .category-icon-bg {
+  background-color: white;
+  transform: scale(1.1);
+}
+
+.category-card.active .category-name {
+  color: white !important;
+}
